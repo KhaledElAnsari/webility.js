@@ -15,7 +15,7 @@
     <div class="someclass">
 
     </div>
-    <script type="text/javascript" src="./webility.min.js"></script>
+    <script type="text/javascript" src="./webility.js"></script>
     <script type="text/javascript">
       webility.pageready(function() {
         testDiv = document.getElementById("test");
@@ -26,7 +26,7 @@
         var obj2 = [0,1,2,3];
         console.log(webility.sort(obj2));
 
-        var elems = webility.select("#test.someclass");
+        var elems = webility.select("#test");
         console.log(elems[0]);
         console.log(elems.ID());
         console.log(elems.addclass("anotherclass"));

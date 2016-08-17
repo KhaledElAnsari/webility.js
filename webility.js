@@ -1,8 +1,5 @@
 var webility = {
   pageready: function(callback) {
-    if( !(callback instanceof Function) ) {
-      return false;
-    }
     var r1 = false, r2 = false;
 
     document.onreadystatechange = function () {
@@ -19,16 +16,24 @@ var webility = {
       if(r1 === true && r2 === true) {
         clearInterval(stateCheck);
 
+        if( !(callback instanceof Function) ) {
+          return "ready";
+        }
+
         callback();
       }
     }, 0);
   },
 
-  selectedElements: "",
-
   select: function(cssSelector) {
     // to select elements based on the CSS tags
-    return new select(cssSelector);
+    if(cssSelector !== undefined && cssSelector.constructor === String &&
+      cssSelector.trim().length > 0) {
+      return new select(cssSelector);
+    }
+    else {
+      throw new Error("Please provide a valid String for the select() function");
+    }
   },
 
   title: function(str) {
@@ -130,6 +135,10 @@ var webility = {
   },
 
   isEmpty: function(element) {
+    if(element === undefined) {
+      throw new Error("Please provide a valid Object/Array for the isEmpty() function");
+    }
+
     if(Object.keys(element).length === 0) {
       return true;
     }
@@ -143,10 +152,10 @@ var webility = {
     // http://www.tutorialspoint.com/python/dictionary_get.htm
 
     if(obj.constructor !== Object) {
-      return false;
+      throw new Error("Please provide a valid Object for the get() function");
     }
     if(key === undefined) {
-      return false;
+      throw new Error("Please provide a valid String as a key for the get() function");
     }
     if(value === undefined) {
       value = null;
@@ -166,16 +175,20 @@ var webility = {
     // This function will sort the Arrays, read about sort at MDN:
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
 
+    if(element === undefined) {
+      throw new Error("Please provide a valid Object/Array for the sort() function");
+    }
+
+    if(type === undefined) {
+      type = "ascend";
+    }
+    else if(type != "ascend" || type != "descend") {
+      throw new Error("ascend & descend are the only options for the sort() function");
+    }
+
     if(element.constructor === Object) {
       // first we convert the Object to Array of Objects
       element = this.objToArray(element);
-
-      if(type === undefined) {
-        type = "ascend";
-      }
-      else if(type != "ascend" || type != "descend") {
-        return false;
-      }
 
       if(sortkey === undefined || sortkey != "key" || sortkey != "value") {
         // take the first key to occur when you loop in the Object
@@ -258,9 +271,6 @@ var webility = {
 
         return element;
       }
-    }
-    else {
-      return false;
     }
   },
 
@@ -392,10 +402,6 @@ var webility = {
 };
 
 function select(cssSelector) {
-  if(cssSelector === undefined || cssSelector.constructor !== String) {
-    return false;
-  }
-
   var selectorChars = [].slice.call(cssSelector, 0);
   var id = 0, cls = 0, space = 0;
 
@@ -451,8 +457,13 @@ function select(cssSelector) {
 
 select.prototype.ID = function(option) {
   var i;
+  if(!this[0]) {
+    // if the selector returned nothing
+    throw new Error("No element was selected");
+  }
+
   if(option === undefined) {
-    return this[0].id;
+    return this[0].id || "No ID";
   }
   else if(option === "remove") {
     for(i = 0; i < this.length; i++) {
@@ -470,8 +481,13 @@ select.prototype.ID = function(option) {
 
 select.prototype.hasclass = function(cls) {
   // depend on select function above
+  if(!this[0]) {
+    // if the selector returned nothing
+    throw new Error("No element was selected");
+  }
+
   if(cls === undefined) {
-    return false;
+    throw new Error("Please provide a valid String for the hasclass() function");
   }
   var i;
   if(("classList" in document.createElement("_"))) {
@@ -501,7 +517,7 @@ select.prototype.hasclass = function(cls) {
 select.prototype.addclass = function(cls) {
   // depend on select function above
   if(cls === undefined) {
-    return false;
+    throw new Error("Please provide a valid String for the hasclass() function");
   }
 
   for(var i = 0; i < this.length; i++) {
@@ -513,7 +529,7 @@ select.prototype.addclass = function(cls) {
 select.prototype.removeclass = function(cls) {
   // depend on select function above
   if(cls === undefined) {
-    return false;
+    throw new Error("Please provide a valid String for the hasclass() function");
   }
 
   var regX = new RegExp("\\b" + cls + "\\b", "g");
@@ -526,4 +542,13 @@ select.prototype.removeclass = function(cls) {
   return this;
 };
 
-module.exports = webility;
+if (typeof exports !== 'undefined') {
+  if (typeof module !== 'undefined' && module.exports) {
+    exports = module.exports = webility;
+  }
+  exports.webility = webility;
+} else {
+  root.webility = webility;
+}
+
+// module.exports = webility;
