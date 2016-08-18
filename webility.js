@@ -101,6 +101,24 @@ var webility = {
     }
   },
 
+  toUTC: function(date) {
+    date = date.replace(" ", "T");
+    var d = new Date(date);
+    var inUTC = new Date(d.getTime() + (d.getTimezoneOffset() * 60000));
+    inUTC = inUTC.toISOString().substr(0,16).replace("T"," ");
+
+    return inUTC;
+  },
+
+  toLocalTime: function(date) {
+    date = date.replace("T", " ");
+    var d = new Date(date + " UTC");
+    var inLocal = new Date(d.getTime() - (d.getTimezoneOffset() * 60000));
+    inLocal = inLocal.toISOString().substr(0,16).replace("T"," ");
+
+    return inLocal;
+  },
+
   dayAfter: function(currentDate, days) {
     var date = new Date(currentDate.valueOf());
     date.setDate(date.getDate() + days);

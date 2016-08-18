@@ -1,0 +1,27 @@
+{
+  "name": "webility.js",
+  "version": "0.1.0",
+  "description": "The Front-End developers utility belt",
+  "main": "webility.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KhaledElAnsari/webility.js.git"
+  },
+  "keywords": [
+    "utility",
+    "front end",
+    "front-end",
+    "Front-End",
+    "javascript",
+    "lightweight"
+  ],
+  "author": "Khaled Al-Ansari <khaledelansari@gmail.com> (http://khaledelansari.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KhaledElAnsari/webility.js/issues"
+  },
+  "homepage": "https://github.com/KhaledElAnsari/webility.js#readme"
+}

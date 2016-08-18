@@ -1,6 +1,6 @@
 # Webility
 
-The Front-End developers **Utility Belt**, light, smooth and easy to use.
+The Front-End developers **Utility Belt**, lightweight, smooth and easy to use.
 
 # Examples
 
@@ -18,8 +18,17 @@ Webility got zero dependences, just inject it your project and your hooked!.
 
 - The NPM way:
 
+  ```
+  npm install webility.js
+  ```
+
+  Then include it in your project like the following:
+
   ```javascript
-  Coming soon
+  var webility = require("webility.js");
+
+  // ES6 way
+  import webility from "webility.js";
   ```
 
 # APIs Reference
@@ -72,7 +81,11 @@ Here's the list of functionalities provided by **Webility** organized by Object 
 
   - **objToArray(Object)**: this will convert the object into and array of objects.
 
-  - **today()**: it will return the date of the currenct day in UTC format.
+  - **today()**: it will return the date of the currenct day in ISO format (ex: 2016-08-17 10:34:54).
+
+  - **toUTC()**: it will return the date in UTC in ISO format (ex: 2016-08-17 10:34:54).
+
+  - **toLocalTime()**: it will return the date Local Time in ISO format (ex: 2016-08-17 10:34:54).
 
   - **getDays()**: this function takes two strings of two dates and retruns an `Array ` of the days between them.
 

@@ -7,6 +7,7 @@ Features:
 ✓ - browser() // returns the current browser
 ✓ - UUID() // like the python UUID function, it creates and check if the string is a valid UUID
 - dateFormat() // returning a specific date format
+- toUTC() // return convert Date object to UTC
 ✓ - today() // returns today's date
 ✓ - objToArray() // from objects with values to arrays of objects
 ✓ - sort() // it can sort arrays and objects
