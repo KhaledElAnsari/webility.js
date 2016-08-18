@@ -4,7 +4,7 @@ The Front-End developers **Utility Belt**, lightweight, smooth and easy to use.
 
 # Examples
 
-Examples page coming soon.
+Check the project page to see some examples: http://khaledelansari.com/webility/
 
 # Installation
 
