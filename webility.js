@@ -417,6 +417,22 @@ var webility = {
     }
   },
 
+  protocol: function() {
+    var link = window.location.href;
+    link = link.split("/");
+
+    console.log(link);
+
+    return link[0];
+  },
+
+  domain: function() {
+    var link = window.location.href;
+    link = link.split("/");
+
+    return link[2];
+  }
+
 };
 
 function select(cssSelector) {

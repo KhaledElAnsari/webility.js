@@ -1,6 +1,6 @@
 {
   "name": "webility.js",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "The Front-End developers utility belt",
   "main": "webility.js",
   "scripts": {
