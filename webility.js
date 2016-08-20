@@ -102,19 +102,91 @@ var webility = {
   },
 
   toUTC: function(date) {
-    date = date.replace(" ", "T");
-    var d = new Date(date);
+    date = date.split(/[^0-9]/);
+
+    if(!date[0] || !date[1] || !date[2]) {
+      throw new Error("Please provide a valid date");
+    }
+
+    for(var i = 0; i < 6; i++) {
+      if(date[i] === undefined) {
+        date[i] = 0;
+        continue;
+      }
+      date[i] = parseInt(date[i]);
+    }
+
+    var d = new Date(date[0], date[1]-1, date[2], date[3], date[4], date[5]);
     var inUTC = new Date(d.getTime() + (d.getTimezoneOffset() * 60000));
-    inUTC = inUTC.toISOString().substr(0,16).replace("T"," ");
+
+    var yyyy = inUTC.getFullYear();
+    var mm = (inUTC.getMonth() + 1).toString(); // getMonth() is zero-based
+    var dd = inUTC.getDate().toString();
+    var HH = inUTC.getHours().toString();
+    var MM = inUTC.getMinutes().toString();
+    var SS = inUTC.getSeconds().toString();
+
+    if(mm.length == 1) {
+      mm = "0" + mm;
+    }
+    if(dd.length == 1) {
+      dd = "0" + dd;
+    }
+    if(HH.length == 1) {
+      HH = "0" + HH;
+    }
+    if(MM.length == 1) {
+      MM = "0" + MM;
+    }
+    if(SS.length == 1) {
+      SS = "0" + SS;
+    }
+    inUTC = yyyy + "-" + mm + "-" + dd + " " + HH + ":" + MM + ":" + SS;
 
     return inUTC;
   },
 
   toLocalTime: function(date) {
-    date = date.replace("T", " ");
-    var d = new Date(date + " UTC");
+    date = date.split(/[^0-9]/);
+
+    if(!date[0] || !date[1] || !date[2]) {
+      throw new Error("Please provide a valid date");
+    }
+
+    for(var i = 0; i < 6; i++) {
+      if(date[i] === undefined) {
+        date[i] = 0;
+        continue;
+      }
+      date[i] = parseInt(date[i]);
+    }
+
+    var d = new Date(date[0], date[1]-1, date[2], date[3], date[4], date[5]);
     var inLocal = new Date(d.getTime() - (d.getTimezoneOffset() * 60000));
-    inLocal = inLocal.toISOString().substr(0,16).replace("T"," ");
+
+    var yyyy = inLocal.getFullYear();
+    var mm = (inLocal.getMonth() + 1).toString(); // getMonth() is zero-based
+    var dd = inLocal.getDate().toString();
+    var HH = inLocal.getHours().toString();
+    var MM = inLocal.getMinutes().toString();
+    var SS = inLocal.getSeconds().toString();
+
+    if(mm.length == 1) {
+      mm = "0" + mm;
+    }
+    if(dd.length == 1) {
+      dd = "0" + dd;
+    }
+    if(HH.length == 1) {
+      HH = "0" + HH;
+    }
+    if(MM.length == 1) {
+      MM = "0" + MM;
+    }
+    if(SS.length == 1) {
+      SS = "0" + SS;
+    }
+    inLocal = yyyy + "-" + mm + "-" + dd + " " + HH + ":" + MM + ":" + SS;
 
     return inLocal;
   },
@@ -420,8 +492,6 @@ var webility = {
   protocol: function() {
     var link = window.location.href;
     link = link.split("/");
-
-    console.log(link);
 
     return link[0];
   },
