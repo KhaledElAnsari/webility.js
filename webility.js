@@ -656,3 +656,10 @@ if (typeof exports !== 'undefined') {
 }
 
 // module.exports = webility;
+
+/*
+ * Use-later functions
+ Array.max = function(array){
+    return Math.max.apply(Math, array);
+ };
+ */
