@@ -4,7 +4,7 @@
   "description": "The Front-End developers utility belt",
   "main": "webility.js",
   "scripts": {
-    "test:live": "live-server",
+    "test:live": "live-server --open=./demo",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

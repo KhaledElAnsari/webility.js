@@ -1,5 +1,8 @@
 # Documents
-./index.html
-./WebilityBeltJS.txt
-./TODO
-./node_modules
+index.html
+WebilityBeltJS.txt
+TODO
+
+# Directories
+.idea/
+node_modules/
