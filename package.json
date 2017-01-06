@@ -1,11 +1,16 @@
 {
   "name": "webility.js",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "description": "The Front-End developers utility belt",
   "main": "webility.js",
   "scripts": {
-    "test:live": "live-server --open=./demo",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "bundle": "rollup --input demo/webility.dev.js --output webility.js",
+    "minify": "uglifyjs webility.js --source-map --compress --output webility.min.js",
+    "clean": "rimraf webility.js webility.min.js",
+    "build": "npm run clean && npm run bundle && npm run minify",
+    "test:live": "live-server demo",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -28,6 +33,12 @@
   },
   "homepage": "https://github.com/KhaledElAnsari/webility.js#readme",
   "devDependencies": {
+    "rimraf": "^2.5.4",
+    "rollup": "^0.40.2",
     "uglify-js": "^2.7.5"
+  },
+  "dependencies": {
+    "rimraf": "^2.5.4",
+    "rollup": "^0.40.2"
   }
 }
