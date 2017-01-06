@@ -4,6 +4,7 @@
   "description": "The Front-End developers utility belt",
   "main": "webility.js",
   "scripts": {
+    "test:live": "live-server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -16,12 +17,17 @@
     "front-end",
     "Front-End",
     "javascript",
-    "lightweight"
+    "lightweight",
+    "utils",
+    "webility"
   ],
   "author": "Khaled Al-Ansari <khaledelansari@gmail.com> (http://khaledelansari.com/)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/KhaledElAnsari/webility.js/issues"
   },
-  "homepage": "https://github.com/KhaledElAnsari/webility.js#readme"
+  "homepage": "https://github.com/KhaledElAnsari/webility.js#readme",
+  "devDependencies": {
+    "uglify-js": "^2.7.5"
+  }
 }

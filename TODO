@@ -1,0 +1,9 @@
+@TODO
+  - Create webility.polyfills:
+    - simply connect some webility.js functions to the native JS Objects
+      ex: `String.prototype.capitalize = function() {/*...*/};`
+      this will give the users a better experience
+  - Update webility.js functions:
+    - add/has/remove class functions, take a reference from `Apollo.js` or `Qwery` by ded
+    - simplify some of the function (like Capitalize), decrease the lines numbers
+    - prepare a better development environment using `npm` commands

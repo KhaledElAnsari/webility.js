@@ -39,36 +39,21 @@ var webility = {
   title: function(str) {
     // This was written with the help of this answer on StackOverFlow
     // http://stackoverflow.com/a/196991/4341572
-
-    var _current = str;
-    var _final = _current.replace(/\w\S*/g, function(str) {
-      return str.charAt(0).toUpperCase() + str.substr(1).toLowerCase();
-    });
-
-    return _final;
+    return str.replace(/\w\S*/g, function(regstr) {
+      return regstr.charAt(0).toUpperCase() + regstr.substr(1).toLowerCase();
+    });;
   },
 
   quote: function(str) {
     // This was a native function in the past now it's not supported
     // Read about it at MDN:
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/quote
-
-    if(str.constructor !== String) {
-      str = str.toString();
-    }
-    var _current = str;
-    var _final = '"' + _current + '"';
-
-    return _final;
+    return '"' + str + '"';
   },
 
   capitalize: function(str) {
     // This will capitalize only the first character
-
-    var _current = str;
-    var _final = _current.charAt(0).toUpperCase() + str.substr(1).toLowerCase();
-
-    return _final;
+    return str.charAt(0).toUpperCase() + str.substr(1).toLowerCase();;
   },
 
   today: function() {
@@ -77,8 +62,6 @@ var webility = {
     var today;
     if(_IEsupport) {
       today = now.toISOString().substr(0,10);
-
-      return today;
     }
     else {
       // This solution was written with the help of this answer
@@ -96,9 +79,9 @@ var webility = {
         day = day.toString();
 
       today = now.getFullYear() + '-' + month + '-' + day;
-
-      return today;
     }
+
+    return today;
   },
 
   toUTC: function(date) {
@@ -225,16 +208,9 @@ var webility = {
   },
 
   isEmpty: function(element) {
-    if(element === undefined) {
-      throw new Error("Please provide a valid Object/Array for the isEmpty() function");
-    }
+    if(element === undefined) throw new Error("Please provide a valid Object/Array for the isEmpty() function");
 
-    if(Object.keys(element).length === 0) {
-      return true;
-    }
-    else {
-      return false;
-    }
+    return (Object.keys(element).length === 0);
   },
 
   get: function(obj, key, value) {
@@ -461,13 +437,8 @@ var webility = {
   },
 
   ismobile: function() {
-    var regX = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|BB10|Windows Phone/i;
-    if( regX.test(window.navigator.userAgent) ) {
-      return true;
-    }
-    else {
-      return false;
-    }
+    var regX = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|BB10|Windows Phone|meego/i;
+    return regX.test(window.navigator.userAgent);
   },
 
   uuid: function(uuid) {
@@ -479,28 +450,21 @@ var webility = {
           .substring(1);
       };
       return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-        s4() + '-' + s4() + s4() + s4();
+             s4() + '-' + s4() + s4() + s4();
     }
     else if(uuid.constructor === String) {
       // if the user sent a UUID then he wants to check if it's a valid one
       var regX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-
       return regX.test(uuid);
     }
   },
 
   protocol: function() {
-    var link = window.location.href;
-    link = link.split("/");
-
-    return link[0];
+    return window.location.href.split("/")[0];
   },
 
   domain: function() {
-    var link = window.location.href;
-    link = link.split("/");
-
-    return link[2];
+    return window.location.href.split("/")[2];
   }
 
 };
