@@ -8,7 +8,7 @@
   </head>
   <body>
     <h2>Testing Webility</h2>
-    <div id="test" class="someclass">
+    <div id="test" class="">
 
     </div>
 
@@ -18,54 +18,54 @@
     <script type="text/javascript" src="./webility.polyfill.js"></script>
     <script type="text/javascript" src="./webility.dev.js"></script>
     <script type="text/javascript">
-      webility.pageready(function() {
-        var myStr = "khaled al-ansari";
-        var myObj = {
-          "k1": 10,
-          "k2": 20
-        };
-        var arr = [0, 1, 2, 3, 5];
-        testDiv = document.getElementById("test");
-        console.log(myStr.quote());
-        console.log(myStr.title());
-        console.log(myStr.capitalize());
-        console.log(myObj.isEmpty());
-        console.log(myObj.get("k3"));
-        console.log(arr.max(arr));
-        console.log(arr.min(arr));
-      });
       // webility.pageready(function() {
+      //   var myStr = "khaled al-ansari";
+      //   var myObj = {
+      //     "k1": 10,
+      //     "k2": 20
+      //   };
+      //   var arr = [0, 1, 2, 3, 5];
       //   testDiv = document.getElementById("test");
-      //   var str = "john doe";
-      //   testDiv.innerHTML = webility.quote(str);
-      //   testDiv.innerHTML = webility.capitalize(str);
-      //
-      //   var obj = [["k","h"],["a","l"],["e","d"]];
-      //   var obj2 = [0,1,2,3];
-      //   console.log(webility.sort(obj2));
-      //
-      //   var elems = webility.select("#test");
-      //   console.log(elems[0]);
-      //   console.log(elems.ID());
-      //   console.log(elems.addclass("anotherclass"));
-      //   console.log(elems.hasclass("someclass"));
-      //   console.log(elems.removeclass("someclass"));
-      //
-      //   console.log(webility.dayAfter("2016-08-17", 2));
-      //
-      //   console.log(webility.uuid());
-      //   console.log(webility.uuid("3ae7fb94-3967-4d83-a134-e29c4eca21d0"));
-      //
-      //   console.log(webility.toUTC("2016-08-17T10:00"));
-      //   console.log(webility.toLocalTime("2016-08-17 10:30:00"));
-      //
-      //   console.log(webility.protocol());
-      //   console.log(webility.domain());
-      //
-      //   var myObj = {};
-      //   console.log(webility.isEmpty(myObj));
-      //   console.log(webility.os(), webility.ismobile());
+      //   console.log(myStr.quote());
+      //   console.log(myStr.title());
+      //   console.log(myStr.capitalize());
+      //   console.log(myObj.isEmpty());
+      //   console.log(myObj.get("k3"));
+      //   console.log(arr.max(arr));
+      //   console.log(arr.min(arr));
       // });
+      webility.pageready(function() {
+        testDiv = document.getElementById("test");
+        var str = "john doe";
+        testDiv.innerHTML = webility.quote(str);
+        testDiv.innerHTML = webility.capitalize(str);
+
+        var obj = [["k","h"],["a","l"],["e","d"]];
+        var obj2 = [0,1,2,3];
+        console.log(webility.sort(obj2));
+
+        var elems = webility.select("#test");
+        console.log(elems[0]);
+        console.log(elems.ID());
+        console.log(elems.addclass("anotherclass"));
+        console.log(elems.hasclass("someclass"));
+        console.log(elems.removeclass("someclass"));
+
+        console.log(webility.dayAfter("2016-08-17", 2));
+
+        console.log(webility.uuid());
+        console.log(webility.uuid("3ae7fb94-3967-4d83-a134-e29c4eca21d0"));
+
+        console.log(webility.toUTC("2016-08-17T10:00"));
+        console.log(webility.toLocalTime("2016-08-17 10:30:00"));
+
+        console.log(webility.protocol());
+        console.log(webility.domain());
+
+        var myObj = {};
+        console.log(webility.isEmpty(myObj));
+        console.log(webility.os(), webility.ismobile());
+      });
     </script>
   </body>
 </html

@@ -552,64 +552,62 @@ select.prototype.ID = function(option) {
 
 select.prototype.hasclass = function(cls) {
   // depend on select function above
-  if(!this[0]) {
-    // if the selector returned nothing
-    throw new Error("No element was selected");
-  }
 
-  if(cls === undefined) {
-    throw new Error("Please provide a valid String for the hasclass() function");
-  }
+  // if the selector returned nothing
+  if(!this[0]) throw new Error("No element was selected");
+
+  if(cls === undefined) throw new Error("Please provide a valid String for the hasclass() function");
+
   var i;
-  if(("classList" in document.createElement("_"))) {
+  if(("classList" in document.documentElement)) {
     // if classList is supported
-    for(i = 0; i < this.length; i++) {
+    for(i = 0, len = this.length; i < len; i++) {
       if(this[i].classList.contains(cls)) {
         return true;
       }
     }
-
     return false;
-
   }
   else {
     // for browsers that doesn't support classList
     var regX = new RegExp("\\b" + cls + "\\b", "g");
-    for(i = 0; i < this.length; i++) {
+    for(i = 0, len = this.length; i < len; i++) {
       if(regX.test(" " + this[i].className + " ")) {
         return true;
       }
     }
-
     return false;
   }
 };
 
 select.prototype.addclass = function(cls) {
   // depend on select function above
-  if(cls === undefined) {
-    throw new Error("Please provide a valid String for the hasclass() function");
-  }
-
-  for(var i = 0; i < this.length; i++) {
-    this[i].className += (" " + cls);
+  if(cls === undefined) throw new Error("Please provide a valid String for the hasclass() function");
+  if(!this.hasclass(cls)) {
+    if(("classList" in document.documentElement)) {
+      for(i = 0, len = this.length; i < len; i++) this[i].classList.add(cls);
+    }
+    else {
+      for(var i = 0, len = this.length; i < len; i++) this[i].className += (" " + cls);
+    }
   }
   return this;
 };
 
 select.prototype.removeclass = function(cls) {
   // depend on select function above
-  if(cls === undefined) {
-    throw new Error("Please provide a valid String for the hasclass() function");
+  if(cls === undefined) throw new Error("Please provide a valid String for the hasclass() function");
+
+  if(("classList" in document.documentElement)) {
+    for(var i = 0, len = this.length; i < len; i++) this[i].classList.remove(cls);
   }
-
-  var regX = new RegExp("\\b" + cls + "\\b", "g");
-
-  for(var i = 0; i < this.length; i++) {
-    this[i].className = (" " + this[i].className + " ");
-    this[i].className = this[i].className.replace(regX, "");
+  else {
+    var regX = new RegExp("\\b" + cls + "\\b", "g");
+    for(var i = 0, len = this.length; i < len; i++) {
+      this[i].className = (" " + this[i].className + " ");
+      this[i].className = this[i].className.replace(regX, "");
+    }
   }
-
   return this;
 };
 
