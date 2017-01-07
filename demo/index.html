@@ -41,8 +41,14 @@
         testDiv.innerHTML = webility.capitalize(str);
 
         var obj = [["k","h"],["a","l"],["e","d"]];
-        var obj2 = [0,1,2,3];
+        var obj2 = [0, 3, 1, 2, 3, 6, 10, 23, 2, 3];
         console.log(webility.sort(obj2));
+
+        function t() {
+          console.log("tozzen");
+        };
+        webility.delay(t, 100)
+        console.log("toz");
 
         var elems = webility.select("#test");
         console.log(elems[0]);

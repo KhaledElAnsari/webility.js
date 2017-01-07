@@ -1,3 +1,4 @@
+var SORT_TYPES = ["ascend", "descend"];
 var webility = {
   pageready: function(callback) {
     var r1 = false, r2 = false;
@@ -241,16 +242,10 @@ var webility = {
     // This function will sort the Arrays, read about sort at MDN:
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
 
-    if(element === undefined) {
-      throw new Error("Please provide a valid Object/Array for the sort() function");
-    }
+    if(element === undefined) throw new Error("Please provide a valid Object/Array for the sort() function");
 
-    if(type === undefined) {
-      type = "ascend";
-    }
-    else if(type != "ascend" || type != "descend") {
-      throw new Error("ascend & descend are the only options for the sort() function");
-    }
+    type = type || "ascend";
+    if(SORT_TYPES.indexOf(type) === -1) throw new Error("ascend & descend are the only options for the sort() function");
 
     if(element.constructor === Object) {
       // first we convert the Object to Array of Objects
@@ -332,7 +327,9 @@ var webility = {
           });
         }
         else if(type == "ascend") {
-          element.sort();
+          element.sort(function(a, b) {
+            return b < a;
+          });
         }
 
         return element;
@@ -469,6 +466,13 @@ var webility = {
 
   deepClone: function(val) {
     return JSON.parse(JSON.stringify(val));
+  },
+
+  delay: function(fn ,ms) {
+    if(ms === undefined || ms < 0) ms = 1;
+    setTimeout(function() {
+      fn();
+    }, ms);
   }
 };
 
@@ -617,10 +621,3 @@ if (typeof exports !== 'undefined') {
   }
   exports.webility = webility;
 }
-
-/*
- * Use-later functions
- Array.max = function(array){
-    return Math.max.apply(Math, array);
- };
- */
