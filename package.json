@@ -2,13 +2,13 @@
   "name": "webility.js",
   "version": "0.1.3",
   "description": "The Front-End developers utility belt",
-  "main": "webility.js",
+  "main": "index.js",
   "scripts": {
-    "bundle": "rollup --input demo/webility.dev.js --output webility.js",
-    "minify": "uglifyjs webility.js --source-map --compress --output webility.min.js",
-    "clean": "rimraf webility.js webility.min.js",
-    "build": "npm run clean && npm run bundle && npm run minify",
-    "test:live": "live-server demo",
+    "bundle:prod": "rollup --config rollup.config.prod.js",
+    "bundle:dev": "rollup --config rollup.config.dev.js",
+    "clean": "rimraf dist/*",
+    "build": "npm run clean && npm run bundle:prod && npm run bundle:dev",
+    "watch": "live-server demo",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepublish": "npm run build"
   },
@@ -35,10 +35,7 @@
   "devDependencies": {
     "rimraf": "^2.5.4",
     "rollup": "^0.40.2",
-    "uglify-js": "^2.7.5"
+    "rollup-plugin-butternut": "^0.1.0"
   },
-  "dependencies": {
-    "rimraf": "^2.5.4",
-    "rollup": "^0.40.2"
-  }
+  "dependencies": {}
 }

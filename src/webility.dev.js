@@ -1,3 +1,4 @@
+var SORT_TYPES = ["ascend", "descend"];
 var webility = {
   pageready: function(callback) {
     var r1 = false, r2 = false;
@@ -27,8 +28,7 @@ var webility = {
 
   select: function(cssSelector) {
     // to select elements based on the CSS tags
-    if(cssSelector !== undefined && cssSelector.constructor === String &&
-      cssSelector.trim().length > 0) {
+    if(cssSelector !== undefined && typeof cssSelector === "string" && cssSelector.trim().length > 0) {
       return new select(cssSelector);
     }
     else {
@@ -217,7 +217,7 @@ var webility = {
     // Inspired by the get function in python, read more about it:
     // http://www.tutorialspoint.com/python/dictionary_get.htm
 
-    if(obj.constructor !== Object) {
+    if(obj instanceof Object) {
       throw new Error("Please provide a valid Object for the get() function");
     }
     if(key === undefined) {
@@ -241,18 +241,12 @@ var webility = {
     // This function will sort the Arrays, read about sort at MDN:
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
 
-    if(element === undefined) {
-      throw new Error("Please provide a valid Object/Array for the sort() function");
-    }
+    if(element === undefined) throw new Error("Please provide a valid Object/Array for the sort() function");
 
-    if(type === undefined) {
-      type = "ascend";
-    }
-    else if(type != "ascend" || type != "descend") {
-      throw new Error("ascend & descend are the only options for the sort() function");
-    }
+    type = type || "ascend";
+    if(SORT_TYPES.indexOf(type) === -1) throw new Error("ascend & descend are the only options for the sort() function");
 
-    if(element.constructor === Object) {
+    if(element instanceof Object) {
       // first we convert the Object to Array of Objects
       element = this.objToArray(element);
 
@@ -294,7 +288,7 @@ var webility = {
 
       return obj;
     }
-    else if(element.constructor === Array) {
+    else if(element instanceof Array) {
       if(element[0] instanceof Object) {
         if(sortkey === undefined) {
           for(var k in element[0]) {
@@ -332,7 +326,9 @@ var webility = {
           });
         }
         else if(type == "ascend") {
-          element.sort();
+          element.sort(function(a, b) {
+            return b < a;
+          });
         }
 
         return element;
@@ -452,7 +448,7 @@ var webility = {
       return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
              s4() + '-' + s4() + s4() + s4();
     }
-    else if(uuid.constructor === String) {
+    else if(typeof uuid === "string") {
       // if the user sent a UUID then he wants to check if it's a valid one
       var regX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
       return regX.test(uuid);
@@ -469,145 +465,80 @@ var webility = {
 
   deepClone: function(val) {
     return JSON.parse(JSON.stringify(val));
+  },
+
+  delay: function(fn ,ms) {
+    if(ms === undefined || ms < 0) ms = 1;
+    setTimeout(function() {
+      fn();
+    }, ms);
   }
 };
 
 function select(cssSelector) {
-  var selectorChars = [].slice.call(cssSelector, 0);
-  var id = 0, cls = 0, space = 0;
+  var _that = this;
 
-  for(var i = 0; i < selectorChars.length; i++) {
-    switch (selectorChars[i]) {
-      case "#":
-        id += 1;
-        break;
-      case ".":
-        cls += 1;
-        break;
-      case " ":
-        space += 1;
-        break;
-      default:
-        break;
-    }
-  }
-
-  var element;
-  if(cls === 0 && id === 0) {
-    element = document.getElementsByTagName(cssSelector);
-  }
-  else if(cls === 0 && space === 0 && id == 1) {
-    cssSelector = cssSelector.replace("#","");
-    element = document.getElementById(cssSelector);
-  }
-  else if(cls == 1 && space === 0 && id === 0) {
-    cssSelector = cssSelector.replace(".","");
-    element = document.getElementsByClassName(cssSelector);
-  }
-  else {
-    element = document.querySelectorAll(cssSelector);
-  }
-
-  if(cls === 0 && space === 0 && id == 1) {
-    var elem = element;
-    element = [].slice.call(element, 0);
-    element.push(elem);
-  }
-  else {
-    element = [].slice.call(element, 0);
-  }
-
-
-  for(i = 0; i < element.length; i++) {
-    this[i] = element[i];
-  }
-  this.length = element.length;
+  var elements = [].slice.call(document.querySelectorAll(cssSelector));
+  elements.map(function(element, i) {
+    _that[i] = element[i];
+  });
+  this.length = elements.length;
 
   return this;
 }
 
-select.prototype.ID = function(option) {
-  var i;
-  if(!this[0]) {
-    // if the selector returned nothing
-    throw new Error("No element was selected");
-  }
-
-  if(option === undefined) {
-    return this[0].id || "No ID";
-  }
-  else if(option === "remove") {
-    for(i = 0; i < this.length; i++) {
-      this[i].id = "";
-    }
-    return this;
-  }
-  else if(option.constructor === String) {
-    for(i = 0; i < this.length; i++) {
-      this[i].id = option;
-    }
-    return this;
-  }
-};
-
 select.prototype.hasclass = function(cls) {
-  // depend on select function above
-  if(!this[0]) {
-    // if the selector returned nothing
-    throw new Error("No element was selected");
-  }
+  if(cls === undefined) throw new Error("Please provide a valid String for the hasclass() function");
 
-  if(cls === undefined) {
-    throw new Error("Please provide a valid String for the hasclass() function");
-  }
-  var i;
-  if(("classList" in document.createElement("_"))) {
-    // if classList is supported
-    for(i = 0; i < this.length; i++) {
-      if(this[i].classList.contains(cls)) {
-        return true;
-      }
+  for(var i = 0, len = this.length; i < len; i++) {
+    if(this[i].classList.contains(cls)) {
+      return true;
     }
-
-    return false;
-
   }
-  else {
-    // for browsers that doesn't support classList
-    var regX = new RegExp("\\b" + cls + "\\b", "g");
-    for(i = 0; i < this.length; i++) {
-      if(regX.test(" " + this[i].className + " ")) {
-        return true;
-      }
-    }
-
-    return false;
-  }
+  return false;
 };
 
 select.prototype.addclass = function(cls) {
-  // depend on select function above
-  if(cls === undefined) {
-    throw new Error("Please provide a valid String for the hasclass() function");
+  if(cls === undefined) throw new Error("Please provide a valid String for the addclass() function");
+  
+  if(!this.hasclass(cls)) {
+    for(var i = 0, len = this.length; i < len; i++) {
+      this[i].classList.add(cls);
+    }
   }
-
-  for(var i = 0; i < this.length; i++) {
-    this[i].className += (" " + cls);
-  }
+  
   return this;
 };
 
 select.prototype.removeclass = function(cls) {
-  // depend on select function above
-  if(cls === undefined) {
-    throw new Error("Please provide a valid String for the hasclass() function");
+  if(cls === undefined) throw new Error("Please provide a valid String for the removeclass() function");
+
+  if(this.hasclass(cls)) {
+    for(var i = 0, len = this.length; i < len; i++) {
+      this[i].classList.remove(cls);
+    }
   }
 
-  var regX = new RegExp("\\b" + cls + "\\b", "g");
+  return this;
+};
 
-  for(var i = 0; i < this.length; i++) {
-    this[i].className = (" " + this[i].className + " ");
-    this[i].className = this[i].className.replace(regX, "");
+select.prototype.replaceclass = function(oldcls, newcls) {
+  if(oldcls === undefined || newcls === undefined) throw new Error("Please provide a valid String for the removeclass() function");
+
+  this.removeclass(oldcls);
+  this.addclass(newcls);
+
+  return this;
+};
+
+select.prototype.toggleclass = function(oldcls, newcls) {
+  if(cls === undefined) throw new Error("Please provide a valid String for the toggleclass() function");
+
+  if(this.hasclass(cls)) {
+    this.removeclass(oldcls);
+  }
+  else {
+    this.addclass(newcls);
   }
 
   return this;
@@ -619,10 +550,3 @@ if (typeof exports !== 'undefined') {
   }
   exports.webility = webility;
 }
-
-/*
- * Use-later functions
- Array.max = function(array){
-    return Math.max.apply(Math, array);
- };
- */
