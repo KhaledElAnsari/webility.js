@@ -533,15 +533,10 @@ select.prototype.replaceclass = function(oldcls, newcls) {
   return this;
 };
 
-select.prototype.toggleclass = function(oldcls, newcls) {
+select.prototype.toggleclass = function(cls) {
   if(cls === undefined) throw new Error("Please provide a valid String for the toggleclass() function");
 
-  if(this.hasclass(cls)) {
-    this.removeclass(oldcls);
-  }
-  else {
-    this.addclass(newcls);
-  }
+  this.classList.toggle(cls);
 
   return this;
 };
