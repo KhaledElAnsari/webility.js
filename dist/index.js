@@ -474,6 +474,16 @@ var webility = {
     setTimeout(function() {
       fn();
     }, ms);
+  },
+
+  validator: function() {
+    var email = function(str) { return (/.+@.+\..+/i).test(str); };
+    var float = function(num) { return (/[0-9]+(\.[0-9]{0,11})$/g).test(num); };
+    
+    return {
+      email: email,
+      float: float
+    };
   }
 };
 
